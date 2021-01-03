@@ -4,55 +4,84 @@
 //
 //  Created by Vivi Lee on 2020/12/28.
 //
-
+//    載入ui畫面
 import UIKit
+//    載入聲音
 import AVFoundation
+//    載入csv解析
 import CodableCSV
+//    設定csv匯入與定義欄位
+struct music: Codable {
+    let name: String
+    let singer: String
+    let musicURL: URL
+    let image: [URL]
+}
+//    宣告讀取csv 產生的 data
+extension music {
+    static var data: [Self] {
+        var array = [Self]()
+        if let data = NSDataAsset(name: "musics")?.data {
+            let decoder = CSVDecoder {
+                $0.headerStrategy = .firstLine
+            }
+            do {
+                array = try decoder.decode([Self].self, from: data)
+            } catch {
+                print(error)
+            }
+        }
+        return array
+    }
+}
+
 
 class ViewController: UIViewController {
+//   定義問題
     @IBOutlet weak var questionLabel: UILabel!
+//    定義答案
     @IBOutlet weak var answerLabel: UILabel!
+//    定義答案歌手顯示照片
     @IBOutlet weak var singerImage: UIImageView!
     
-    var player:AVAudioPlayer = AVAudioPlayer()
-    
-    var questions = [Question]()
+//設定取用data
+    let musics = music.data
+// 設定question定義
+    var questions = ""
     var index = 0
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-        struct musics: Codable {
-            let name: String
-            let singer: String
-            let music: URL
-            let image:UIImageView
-            
-        }
+
+//    播放音樂的動作定義
+    var player:AVAudioPlayer = AVAudioPlayer()
+    @IBAction func play(_ sender: Any) {
+        let path = Bundle.main.url(forResource:
+                                        "musicURL", withExtension: "URL")!
+        let playerItem = AVPlayerItem(url: path)
+        player.replaceCurrentItem(with: playerItem)
+        player.play()
     }
+    @IBAction func pause(_ sender: Any) {
+        player.pause()
+    }
+    @IBAction func restart(_ sender: Any) {
+        player.stop()
+        player.play()
+    }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        let question1 = Question(description: "Listen the Music!", answer: "vivi")
+
+        let question = Question(description: "Listen the Music!", answer: musics(name: "")
         questions.append(question1)
-        let question2 = Question(description: "住哪", answer: "台中")
-        questions.append(question2)
-        let question3 = Question(description: "幾歲", answer: "26")
-        questions.append(question3)
-        
+
         questions.shuffle()
-        
+
         questionLabel.text = questions[index].description
         answerLabel.text = ""
 
     }
-    @IBAction func play(_ sender: Any) {
-    }
-    @IBAction func pause(_ sender: Any) {
-    }
-    @IBAction func restart(_ sender: Any) {
-    }
-    
+
     @IBAction func showAnswerBtn(_ sender: UIButton) {
         answerLabel.text = questions[index].answer
     }
@@ -65,12 +94,9 @@ class ViewController: UIViewController {
         questionLabel.text = questions[index].description
         answerLabel.text = ""
     }
-        
-    
-
-    
-
-
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
-
+}
 
