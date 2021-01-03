@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,8 @@
 		4463E3202599F4F100171E94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4463E31E2599F4F100171E94 /* Main.storyboard */; };
 		4463E3222599F4F500171E94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4463E3212599F4F500171E94 /* Assets.xcassets */; };
 		4463E3252599F4F500171E94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4463E3232599F4F500171E94 /* LaunchScreen.storyboard */; };
+		4463E3322599F83F00171E94 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4463E3312599F83F00171E94 /* Question.swift */; };
+		44CE209425A1598600ACFE36 /* CodableCSV in Frameworks */ = {isa = PBXBuildFile; productRef = 44CE209325A1598600ACFE36 /* CodableCSV */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,7 @@
 		4463E3212599F4F500171E94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4463E3242599F4F500171E94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4463E3262599F4F500171E94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4463E3312599F83F00171E94 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Question.swift; path = question/Question.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44CE209425A1598600ACFE36 /* CodableCSV in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +64,7 @@
 				4463E31A2599F4F100171E94 /* SceneDelegate.swift */,
 				4463E31C2599F4F100171E94 /* ViewController.swift */,
 				4463E31E2599F4F100171E94 /* Main.storyboard */,
+				4463E3312599F83F00171E94 /* Question.swift */,
 				4463E3212599F4F500171E94 /* Assets.xcassets */,
 				4463E3232599F4F500171E94 /* LaunchScreen.storyboard */,
 				4463E3262599F4F500171E94 /* Info.plist */,
@@ -83,6 +88,9 @@
 			dependencies = (
 			);
 			name = "QA 20201228";
+			packageProductDependencies = (
+				44CE209325A1598600ACFE36 /* CodableCSV */,
+			);
 			productName = "QA 20201228";
 			productReference = 4463E3152599F4F100171E94 /* QA 20201228.app */;
 			productType = "com.apple.product-type.application";
@@ -110,6 +118,9 @@
 				Base,
 			);
 			mainGroup = 4463E30C2599F4F100171E94;
+			packageReferences = (
+				44CE209225A1598600ACFE36 /* XCRemoteSwiftPackageReference "CodableCSV" */,
+			);
 			productRefGroup = 4463E3162599F4F100171E94 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4463E31D2599F4F100171E94 /* ViewController.swift in Sources */,
+				4463E3322599F83F00171E94 /* Question.swift in Sources */,
 				4463E3192599F4F100171E94 /* AppDelegate.swift in Sources */,
 				4463E31B2599F4F100171E94 /* SceneDelegate.swift in Sources */,
 			);
@@ -341,6 +353,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		44CE209225A1598600ACFE36 /* XCRemoteSwiftPackageReference "CodableCSV" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dehesa/CodableCSV";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		44CE209325A1598600ACFE36 /* CodableCSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44CE209225A1598600ACFE36 /* XCRemoteSwiftPackageReference "CodableCSV" */;
+			productName = CodableCSV;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4463E30D2599F4F100171E94 /* Project object */;
 }
