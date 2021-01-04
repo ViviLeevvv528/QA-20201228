@@ -53,10 +53,9 @@ class ViewController: UIViewController {
 //    播放音樂的動作定義
     var player:AVAudioPlayer = AVAudioPlayer()
     @IBAction func play(_ sender: Any) {
-        let path = Bundle.main.url(forResource:
-                                        "musicURL", withExtension: "URL")!
-        let playerItem = AVPlayerItem(url: path)
-        player.replaceCurrentItem(with: playerItem)
+        let player = AVPlayer()
+        let fileUrl = musics[0].musicURL
+        let playerItem = AVPlayerItem(url: url)
         player.play()
     }
     @IBAction func pause(_ sender: Any) {
