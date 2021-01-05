@@ -27,8 +27,8 @@ struct music: Codable {
 //        image = imagesString.components {
 //                  URL(string: $0.components[0])!
 //            }
-//            
-//        }
+//
+        }
 
 //    宣告讀取csv 產生的 data
 extension music {
@@ -102,7 +102,7 @@ class ViewController: UIViewController {
 
     @IBAction func showAnswerBtn(_ sender: UIButton) {
         answerLabel.text = musics[random].name
-        singerImage.image = UIImage(named: musics[random].image)
+//        singerImage.image = UIImage(named: musics[random].image)
         
     }
     @IBAction func nextBtn(_ sender: UIButton) {
