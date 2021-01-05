@@ -8,6 +8,8 @@
 import UIKit
 //    載入聲音
 import AVFoundation
+var name = ""
+var random = Int.random(in: 0...44)
 //    載入csv解析
 import CodableCSV
 //    設定csv匯入與定義欄位
@@ -16,12 +18,23 @@ struct music: Codable {
     let singer: String
     let musicURL: URL
 //    let image: [URL]
-}
+//    init(from decoder: Decoder) throws {
+//            let container = try decoder.container(keyedBy: CodingKeys.self)
+//            name = try container.decode(String.self, forKey: .name)
+//            singer = try container.decode(String.self, forKey: .singer)
+//            musicURL = try container.decode(URL.self, forKey: .musicURL)
+//        let imagesString = try container.decode(String.self, forKey: .image)
+//        image = imagesString.components {
+//                  URL(string: $0.components[0])!
+//            }
+//            
+//        }
+
 //    宣告讀取csv 產生的 data
 extension music {
     static var data: [Self] {
         var array = [Self]()
-        if let data = NSDataAsset(name: "music.csv")?.data {
+        if let data = NSDataAsset(name: "music")?.data {
             let decoder = CSVDecoder {
                 $0.headerStrategy = .firstLine
             }
@@ -38,41 +51,46 @@ extension music {
 
 
 class ViewController: UIViewController {
+    //設定取用data
+        var musics = music.data
+    // 設定question定義
+        var questions = ""
+        var index = 0
+    
 //   定義問題
     @IBOutlet weak var questionLabel: UILabel!
 //    定義答案
     @IBOutlet weak var answerLabel: UILabel!
+//    let answerSong = "musics[0].name"
 //    定義答案歌手顯示照片
     @IBOutlet weak var singerImage: UIImageView!
     
-//設定取用data
-    var musics = music.data
-// 設定question定義
-    var questions = ""
-    var index = 0
+
 
 //    播放音樂的動作定義
 //    var player:AVAudioPlayer = AVAudioPlayer()
     let player = AVPlayer()
     @IBAction func play(_ sender: Any) {
-        let fileUrl = musics[0].musicURL
+        let fileUrl = musics[random].musicURL
         let playerItem = AVPlayerItem(url: fileUrl)
-        self.player.replaceCurrentItem(with: playerItem)
-        self.player.play()
+        player.replaceCurrentItem(with: playerItem)
+        player.play()
+        print(random)
     }
     @IBAction func pause(_ sender: Any) {
         player.pause()
     }
     @IBAction func restart(_ sender: Any) {
 //        player.stop()
+        player.seek(to: .zero) //因為stop音樂功能好像不支援了 改成寫指定到時間0
         player.play()
     }
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//
-//        let question = Question(description: "Listen the Music!", answer: musics(name: "")
+
+//        let question = Question(description: "Play the Music!", answer: "musics[0].name"
 //        questions.append(question1)
 //
 //        questions.shuffle()
@@ -83,9 +101,12 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showAnswerBtn(_ sender: UIButton) {
-        answerLabel.text = musics[0].name
+        answerLabel.text = musics[random].name
+        singerImage.image = UIImage(named: musics[random].image)
+        
     }
-//    @IBAction func nextBtn(_ sender: UIButton) {
+    @IBAction func nextBtn(_ sender: UIButton) {
+        
 ////        if index < questions.count - 1 {
 //        index = index + 1
 //            if index == questions.count{
@@ -93,7 +114,7 @@ class ViewController: UIViewController {
 //            }
 //        questionLabel.text = questions[index].description
 //        answerLabel.text = ""
-//    }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
