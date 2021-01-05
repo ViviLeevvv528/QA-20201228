@@ -15,13 +15,13 @@ struct music: Codable {
     let name: String
     let singer: String
     let musicURL: URL
-    let image: [URL]
+//    let image: [URL]
 }
 //    宣告讀取csv 產生的 data
 extension music {
     static var data: [Self] {
         var array = [Self]()
-        if let data = NSDataAsset(name: "musics")?.data {
+        if let data = NSDataAsset(name: "music.csv")?.data {
             let decoder = CSVDecoder {
                 $0.headerStrategy = .firstLine
             }
@@ -29,6 +29,7 @@ extension music {
                 array = try decoder.decode([Self].self, from: data)
             } catch {
                 print(error)
+                print("loooooook here")
             }
         }
         return array
@@ -45,54 +46,54 @@ class ViewController: UIViewController {
     @IBOutlet weak var singerImage: UIImageView!
     
 //設定取用data
-    let musics = music.data
+    var musics = music.data
 // 設定question定義
     var questions = ""
     var index = 0
 
 //    播放音樂的動作定義
-    var player:AVAudioPlayer = AVAudioPlayer()
+//    var player:AVAudioPlayer = AVAudioPlayer()
+    let player = AVPlayer()
     @IBAction func play(_ sender: Any) {
-        let player = AVPlayer()
         let fileUrl = musics[0].musicURL
-        let playerItem = AVPlayerItem(url: url)
-        player.play()
+        let playerItem = AVPlayerItem(url: fileUrl)
+        self.player.replaceCurrentItem(with: playerItem)
+        self.player.play()
     }
     @IBAction func pause(_ sender: Any) {
         player.pause()
     }
     @IBAction func restart(_ sender: Any) {
-        player.stop()
+//        player.stop()
         player.play()
     }
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
-        let question = Question(description: "Listen the Music!", answer: musics(name: "")
-        questions.append(question1)
-
-        questions.shuffle()
-
-        questionLabel.text = questions[index].description
-        answerLabel.text = ""
+//
+//        let question = Question(description: "Listen the Music!", answer: musics(name: "")
+//        questions.append(question1)
+//
+//        questions.shuffle()
+//
+//        questionLabel.text = questions[index].description
+//        answerLabel.text = ""
 
     }
 
     @IBAction func showAnswerBtn(_ sender: UIButton) {
-        answerLabel.text = questions[index].answer
+        answerLabel.text = musics[0].name
     }
-    @IBAction func nextBtn(_ sender: UIButton) {
-//        if index < questions.count - 1 {
-        index = index + 1
-            if index == questions.count{
-                index = 0
-            }
-        questionLabel.text = questions[index].description
-        answerLabel.text = ""
-    }
+//    @IBAction func nextBtn(_ sender: UIButton) {
+////        if index < questions.count - 1 {
+//        index = index + 1
+//            if index == questions.count{
+//                index = 0
+//            }
+//        questionLabel.text = questions[index].description
+//        answerLabel.text = ""
+//    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
