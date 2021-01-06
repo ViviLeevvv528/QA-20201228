@@ -17,18 +17,20 @@ struct music: Codable {
     let name: String
     let singer: String
     let musicURL: URL
-//    let image: [URL]
-//    init(from decoder: Decoder) throws {
-//            let container = try decoder.container(keyedBy: CodingKeys.self)
-//            name = try container.decode(String.self, forKey: .name)
-//            singer = try container.decode(String.self, forKey: .singer)
-//            musicURL = try container.decode(URL.self, forKey: .musicURL)
-//        let imagesString = try container.decode(String.self, forKey: .image)
-//        image = imagesString.components {
-//                  URL(string: $0.components[0])!
-//            }
-//
+    let image: [URL]
+    
+    init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            name = try container.decode(String.self, forKey: .name)
+            singer = try container.decode(String.self, forKey: .singer)
+            musicURL = try container.decode(URL.self, forKey: .musicURL)
+        let imagesString = try container.decode(String.self, forKey: .image)
+        image = imagesString.components(separatedBy: ",").map {
+                  URL(string: $0.components(separatedBy: "(")[1].replacingOccurrences(of: ")", with: ""))!
+            }
+        print(image[0])
         }
+}
 
 //    宣告讀取csv 產生的 data
 extension music {
@@ -61,7 +63,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
 //    定義答案
     @IBOutlet weak var answerLabel: UILabel!
-//    let answerSong = "musics[0].name"
+    @IBOutlet weak var answerSingerLabel: UILabel!
 //    定義答案歌手顯示照片
     @IBOutlet weak var singerImage: UIImageView!
     
@@ -102,7 +104,8 @@ class ViewController: UIViewController {
 
     @IBAction func showAnswerBtn(_ sender: UIButton) {
         answerLabel.text = musics[random].name
-//        singerImage.image = UIImage(named: musics[random].image)
+        answerSingerLabel.text = musics[random].singer
+//        singerImage. = UIImage(data: musics[random].image)
         
     }
     @IBAction func nextBtn(_ sender: UIButton) {
